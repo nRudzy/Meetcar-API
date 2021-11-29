@@ -2,15 +2,13 @@
 
 namespace App\Tests;
 
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Bridge\PhpUnit\SymfonyTestsListener;
+use PHPUnit\Framework\TestCase;
 
-class oneTest extends KernelTestCase
+class OneTest extends TestCase 
 {
+    /** @test */
     public function unTest()
     {
-        self::bootKernel();
-
-        $this->assertEquals(true);
+        $this->assertEquals(2, 1 + 1);
     }
 }
