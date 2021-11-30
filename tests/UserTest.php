@@ -44,5 +44,7 @@ class UserTest extends KernelTestCase
         $this->assertTrue(in_array('ROLE_ADMIN', $userRecord->getRoles()));
         $this->assertTrue(in_array('ROLE_ORGANIZER', $userRecord->getRoles()));
         $this->assertTrue(in_array('ROLE_USER', $userRecord->getRoles()));
+
+        $this->entityManager->remove($userRecord);
     }
 }
