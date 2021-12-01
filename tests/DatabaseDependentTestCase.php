@@ -22,4 +22,21 @@ class DatabaseDependentTestCase extends KernelTestCase
         $this->entityManager->close();
         $this->entityManager = null;
     }
+
+    protected function testUser($email, $lastname, $firstname, $age, $pseudo, $city, $roles, $userRecord): void
+    {
+        $this->assertEquals($email, $userRecord->getEmail());
+        $this->assertEquals($email, $userRecord->getUsername());
+        $this->assertEquals($email, $userRecord->getUserIdentifier());
+        $this->assertEquals($lastname, $userRecord->getLastName());
+        $this->assertEquals($firstname, $userRecord->getFirstName());
+        $this->assertEquals($age, $userRecord->getAge());
+        $this->assertEquals($pseudo, $userRecord->getPseudo());
+        $this->assertEquals($city, $userRecord->getCity());
+        $this->assertTrue(in_array('ROLE_USER', $userRecord->getRoles()));
+
+        foreach($roles as $role) {
+            $this->assertTrue(in_array($role, $userRecord->getRoles()));
+        }
+    }
 }
