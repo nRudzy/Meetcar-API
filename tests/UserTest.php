@@ -3,32 +3,19 @@
 namespace App\Tests;
 
 use App\Entity\User;
-use App\Tests\DatabasePrimer;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use App\Tests\DatabaseDependentTestCase;
 
-class UserTest extends KernelTestCase
+class UserTest extends DatabaseDependentTestCase
 {
-    /** @var EntityMangerInterface */
-    private $entityManager;
-
-    protected function setUp(): void
-    {
-        $kernel = self::bootKernel();
-        DatabasePrimer::prime($kernel);
-        $this->entityManager = $kernel->getContainer()->get('doctrine')->getManager();
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        $this->entityManager->close();
-        $this->entityManager = null;
-    }
-
     /** @test */
     public function a_user_can_be_created_in_db()
     {
         $user = new User();
+        $user->setLastname('Toto');
+        $user->setFirstname('Jean');
+        $user->setAge(19);
+        $user->setPseudo('JToto');
+        $user->setCity('Lyon');
         $user->setEmail('toto@gmail.com');
         $user->setPassword('passwd');
         $user->setRoles(['ROLE_ADMIN', 'ROLE_ORGANIZER']);
@@ -41,6 +28,10 @@ class UserTest extends KernelTestCase
         $this->assertEquals('toto@gmail.com', $userRecord->getEmail());
         $this->assertEquals('toto@gmail.com', $userRecord->getUsername());
         $this->assertEquals('toto@gmail.com', $userRecord->getUserIdentifier());
+        $this->assertEquals('Toto', $userRecord->getLastName());
+        $this->assertEquals('Jean', $userRecord->getFirstName());
+        $this->assertEquals(19, $userRecord->getAge());
+        $this->assertEquals('JToto', $userRecord->getPseudo());
         $this->assertTrue(in_array('ROLE_ADMIN', $userRecord->getRoles()));
         $this->assertTrue(in_array('ROLE_ORGANIZER', $userRecord->getRoles()));
         $this->assertTrue(in_array('ROLE_USER', $userRecord->getRoles()));

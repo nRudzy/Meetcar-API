@@ -2,7 +2,6 @@
 
 namespace App\Tests;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Component\HttpKernel\KernelInterface;
 

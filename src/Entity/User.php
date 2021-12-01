@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -16,13 +17,62 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Assert\Type("integer")
+     * @Assert\NotNull
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email
+     * @Assert\Type("string")
+     * @Assert\Length(max=180)
+     * @Assert\NotBlank
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="string", length=60)
+     * @Assert\Type("string")
+     * @Assert\Length(max=60)
+     * @Assert\NotBlank
+     */
+    private $lastname;
+
+    /**
+     * @ORM\Column(type="string", length=60)
+     * @Assert\Type("string")
+     * @Assert\Length(max=60)
+     * @Assert\NotBlank
+     */
+    private $firstname;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Type("integer")
+     * @Assert\NotNull
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 120
+     * )
+     */
+    private $age;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\Type("string")
+     * @Assert\Length(max=20)
+     * @Assert\NotBlank
+     */
+    private $pseudo;
+
+    /**
+     * @ORM\Column(type="string", length=60)
+     * @Assert\Type("string")
+     * @Assert\Length(max=60)
+     * @Assert\NotBlank
+     */
+    private $city;
 
     /**
      * @ORM\Column(type="json")
@@ -32,6 +82,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Type("string")
+     * @Assert\Length(min=8)
+     * @Assert\NotBlank
      */
     private $password;
 
@@ -122,5 +175,65 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getAge(): ?int
+    {
+        return $this->age;
+    }
+
+    public function setAge(int $age): self
+    {
+        $this->age = $age;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
     }
 }
