@@ -46,21 +46,14 @@ class CreateNewUserCommand extends Command
             $rolesInput = $input->getArgument('roles');
     
             if ($emailInput) {
-                $io->note(sprintf('You passed an email: %s', $emailInput));
                 $user->setEmail($emailInput);
             }
     
             if ($passwordInput) {
-                $io->note(sprintf('You passed password: %s', $passwordInput));
                 $user->setPassword($passwordInput);
             }
     
             if ($rolesInput) {
-                if (is_array($rolesInput) && !empty($rolesInput)) {
-                    foreach ($rolesInput as $role) {
-                        $io->note(sprintf('You passed a role: %s', $role));
-                    }
-                }
                 $user->setRoles($rolesInput);
             }
 
