@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Model;
 
 use App\Entity\User;
 use App\Tests\DatabaseDependentTestCase;
