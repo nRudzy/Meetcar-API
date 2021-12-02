@@ -29,8 +29,13 @@ class CreateNewUserCommand extends Command
     protected function configure(): void
     {
         $this
+            ->addArgument('lastname', InputArgument::REQUIRED, 'User lastname')
+            ->addArgument('firstname', InputArgument::REQUIRED, 'User firstname')
+            ->addArgument('age', InputArgument::REQUIRED, 'User age')
+            ->addArgument('pseudo', InputArgument::REQUIRED, 'User pseudo')
             ->addArgument('email', InputArgument::REQUIRED, 'User email')
             ->addArgument('password', InputArgument::REQUIRED, 'User password')
+            ->addArgument('city', InputArgument::REQUIRED, 'User city')
             ->addArgument('roles', InputArgument::IS_ARRAY | InputArgument::OPTIONAL, 'Roles ? (separate with spaces). Leave blank if needed')
         ;
     }
@@ -41,17 +46,15 @@ class CreateNewUserCommand extends Command
         $user = new User();
 
         try {
-            $emailInput = $input->getArgument('email');
-            $passwordInput = $input->getArgument('password');
             $rolesInput = $input->getArgument('roles');
-    
-            if ($emailInput) {
-                $user->setEmail($emailInput);
-            }
-    
-            if ($passwordInput) {
-                $user->setPassword($passwordInput);
-            }
+     
+            $user->setLastname($input->getArgument('lastname'));
+            $user->setFirstname($input->getArgument('firstname'));
+            $user->setAge($input->getArgument('age'));
+            $user->setPseudo($input->getArgument('pseudo'));
+            $user->setCity($input->getArgument('city'));
+            $user->setEmail($input->getArgument('email'));
+            $user->setPassword($input->getArgument('password'));
     
             if ($rolesInput) {
                 $user->setRoles($rolesInput);
